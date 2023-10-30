@@ -11,17 +11,32 @@ import {
 
 import * as Animatable from 'react-native-animatable'
 
+import {useNavigation} from '@react-navigation/native'
+
+
 export default function SignIn() {
     const openLink = () =>
-        Linking.openURL('https://instagram.com/ath_mnz_?igshid=OGQ5ZDc2ODk2ZA==');
+        Linking.openURL('https://schoolcloudev.my.canva.site/');
+
+    const navigation = useNavigation();
+
 
     return (
         <View style={styles.container}>
-            <Animatable.View animation="fadeInLeft" delay={500} style={styles.containerHeader}>
+            <Animatable.View 
+            animation="fadeInLeft" 
+            delay={500} 
+            style={styles.containerHeader}
+            >
+                
                 <Text style={styles.message}> Bem-vindo(a)</Text>
             </Animatable.View>
 
-            <Animatable.View animation="fadeInUp" delay={200} style={styles.containerForm}>
+            <Animatable.View 
+            animation="fadeInUp" 
+            delay={200} 
+            style={styles.containerForm}
+            >
 
                 <Text style={styles.title}>E-mail</Text>
                 <TextInput
@@ -39,12 +54,15 @@ export default function SignIn() {
                     <Text style={styles.buttonText}>Acessar</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.buttonRegister}>
-                    <Text style={styles.registerText}>Não tenho uma conta</Text>
+                <TouchableOpacity 
+                style={styles.buttonRegister} 
+                onPress={ () => navigation.navigate('Register')}
+                >
+                    <Text style={styles.registerText}>Não possui uma conta? Registre-se</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.creditsButton} onPress={openLink}>
-                    <Text style={styles.creditsText}>@ath_mnz</Text>
+                    <Text style={styles.creditsText}>@SchoolCloud</Text>
                 </TouchableOpacity>
 
             </Animatable.View>
