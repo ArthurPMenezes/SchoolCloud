@@ -8,18 +8,45 @@ import {
     Linking,
 
 } from 'react-native';
-
 import * as Animatable from 'react-native-animatable'
-
 import {useNavigation} from '@react-navigation/native'
+import { useState } from 'react';
 
 
 export default function SignIn() {
     const openLink = () =>
         Linking.openURL('https://schoolcloudev.my.canva.site/');
-
     const navigation = useNavigation();
+    const [email, setEmail] = useState("");
+    const [nome, setNome] = useState("");
+    const handleLogin = async () => {
+        try {
+          const response = await fetch('http://10.0.0.176:3000/api/login', {
+            meqthod: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              email,
+              nome,
+            }),
+          });
+      
+          if (response.ok) {
+            // Login bem-sucedido, pode navegar para a próxima tela
+            navigation.navigate('homePage');
+            setEmail("");
+            setNome("");
 
+          } else {
+            // Tratar erro de login aqui
+            console.error('Este usuário não existe');
+          }
+        } catch (error) {
+          console.error('Erro ao realizar o login', error);
+        }
+      };
+      
 
     return (
         <View style={styles.container}>
@@ -42,15 +69,19 @@ export default function SignIn() {
                 <TextInput
                     placeholder="Digite um email..."
                     style={styles.input}
+                    value={email}
+                    onChangeText={(text) => setEmail(text)}
                 />
 
 <               Text style={styles.title}>Nome</Text>
                 <TextInput
                     placeholder="Digite seu nome completo..."
                     style={styles.input}
+                    value={nome}
+                    onChangeText={(text) => setNome(text)}
                 />
 
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity style={styles.button} onPress={handleLogin}>
                     <Text style={styles.buttonText}>Acessar</Text>
                 </TouchableOpacity>
 

@@ -28,8 +28,8 @@ export default function SignIn() {
   function handleSubmit() {
     if (email && nome && turma) {
       const data = {
-        email: email,
-        nome: nome,
+        email: email.trim(),
+        nome: nome.trim(),
         turma: turma,
       };
   
@@ -47,14 +47,29 @@ export default function SignIn() {
           return response.text(); // Receber a resposta como texto
         })
         .then((responseData) => {
-          console.log("Resposta do servidor:", responseData); // Registrar a resposta
+          console.log("Resposta do servidor:", responseData);
           try {
-            const parsedData = JSON.parse(responseData); // Tentar analisar a resposta como JSON
+            const parsedData = JSON.parse(responseData);
+        
+            // Se o registro foi bem-sucedido
             console.log("Registro bem-sucedido!");
-            // Adicione código para lidar com o sucesso, como redirecionar o usuário.
+            setEmail("");
+            setNome("");
+            setTurma("");
+            // Adicionar código para lidar com o sucesso, como redirecionar o usuário.
+        
           } catch (error) {
             console.log("Erro na análise da resposta:", error);
-            // Adicione código para lidar com erros, como exibir uma mensagem de erro.
+        
+            // Se o servidor indicar que o nome e e-mail já estão registrados
+            if (responseData.includes("Nome e e-mail já registrados.")) {
+              console.log("Nome e e-mail já registrados. Exibir mensagem de erro ao usuário.");
+              console.error('Nome e/ou E-mail já registrado(os)')
+              // código para exibir uma mensagem de erro ao usuário.
+            } else {
+              console.log("Outro tipo de erro. Adicionar código para lidar com isso.");
+              // Adicione código para lidar com outros tipos de erro, se necessário.
+            }
           }
         })
         .catch((error) => {
@@ -65,7 +80,6 @@ export default function SignIn() {
       console.log("Preencha todos os campos corretamente!");
     }
   }
-  
 
   return (
     <View style={styles.container}>
@@ -140,21 +154,21 @@ export default function SignIn() {
 }
 
 const styles = StyleSheet.create({
-  container:{
+  container: {
     flex: 1,
     backgroundColor: '#1C8ADB'
   },
-  containerHeader:{
+  containerHeader: {
     marginTop: '14%',
     marginBottom: '8%',
     paddingStart: '5%'
   },
-  message:{
+  message: {
     fontSize: 35,
     fontWeight: 'bold',
     color: '#FFF'
   },
-  containerForm:{
+  containerForm: {
     backgroundColor: '#FFF',
     flex: 1,
     borderTopLeftRadius: 25,
@@ -162,17 +176,17 @@ const styles = StyleSheet.create({
     paddingStart: '5%',
     paddingEnd: '5%'
   },
-  title:{
+  title: {
     fontSize: 20,
     marginTop: 28
   },
-  input:{
+  input: {
     borderBottomWidth: 1,
     height: 40,
     marginBottom: 12,
     fontSize: 16,
   },
-  button:{
+  button: {
     backgroundColor: '#1C8ADB',
     width: '100%',
     borderRadius: 4,
@@ -181,23 +195,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  buttonText:{
+  buttonText: {
     color: '#FFF',
     fontSize: 18,
     fontWeight: 'bold'
   },
-  buttonRegister:{
+  buttonRegister: {
     marginTop: 14,
     alignSelf: 'center'
   },
-  registerText:{
+  registerText: {
     color:'#A1A1A1'
   },
-  creditsButton:{
+  creditsButton: {
     alignSelf: 'center',
     marginTop: 300,
   },
-  creditsText:{
+  creditsText: {
     color: '#a1a1a1',
   },
   checkboxContainer: {
