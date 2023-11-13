@@ -22,32 +22,48 @@ export default function SignIn() {
     const handleLogin = async () => {
         try {
           const response = await fetch('http://10.0.0.176:3000/api/login', {
-            meqthod: 'POST',
+            method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              email,
-              nome,
+              email:email.trim(),
+              nome:nome.trim(),
             }),
           });
       
           if (response.ok) {
-            // Login bem-sucedido, pode navegar para a próxima tela
-            navigation.navigate('homePage');
+            const responseData = await response.json();
+            // Obtém a turma do usuário a partir da resposta do servidor (se estiver disponível)
+            const userTurma = responseData.turma;
+      
+            // Redireciona para a tela apropriada com base na turma
+            switch (userTurma) {
+              case '1':
+                navigation.navigate('ScreenOne');
+                break;
+              case '2':
+                navigation.navigate('ScreenTwo');
+                break;
+              case '3':
+                navigation.navigate('ScreenThree');
+                break;
+              // Adicione mais casos conforme necessário
+              default:
+                // Redirecione para uma tela padrão se a turma não for encontrada
+                navigation.navigate('DefaultScreen');
+            }
+      
             setEmail("");
             setNome("");
-
           } else {
-            // Tratar erro de login aqui
             console.error('Este usuário não existe');
           }
         } catch (error) {
           console.error('Erro ao realizar o login', error);
         }
       };
-      
-
+            
     return (
         <View style={styles.container}>
             <Animatable.View 
