@@ -156,7 +156,7 @@ export default function SignIn() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1C8ADB'
+    backgroundColor: '#0064EA'
   },
   containerHeader: {
     marginTop: '14%',
@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   button: {
-    backgroundColor: '#1C8ADB',
+    backgroundColor: '#0064EA',
     width: '100%',
     borderRadius: 4,
     paddingVertical: 8,
@@ -236,7 +236,7 @@ const styles = StyleSheet.create({
     marginRight: 20,
   },
   checkboxSelected: {
-    backgroundColor: "#35AAFF",
+    backgroundColor: "#0064EA",
   },
   checkboxText: {
     color: "#888",
