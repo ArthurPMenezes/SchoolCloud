@@ -56,8 +56,8 @@ export default function SignIn() {
             setEmail("");
             setNome("");
             setTurma("");
-            // Adicionar código para lidar com o sucesso, como redirecionar o usuário.
-        
+            navigation.navigate('SignIn')  
+          
           } catch (error) {
             console.log("Erro na análise da resposta:", error);
         

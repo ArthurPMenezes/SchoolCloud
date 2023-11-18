@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from "react-native";
+import { 
+  View, 
+  Text, 
+  StyleSheet, 
+  Image, 
+  ScrollView, 
+  TouchableOpacity ,
+  Linking,
+} from "react-native";
 import AppIntroSlider from "react-native-app-intro-slider";
 import { format } from 'date-fns';
 import { pt } from 'date-fns/locale';
@@ -71,6 +79,7 @@ export default function App() {
       // Limpa o intervalo quando o componente é desmontado
       return () => clearInterval(intervalId);
     }, []); 
+
   
     return <Text style={style}>{greeting}</Text>;
   }
@@ -95,6 +104,9 @@ export default function App() {
 
   function Slide2({ item }) {
     const [classSchedules, setClassSchedules] = useState([]);
+    const openLink0 = () =>
+    Linking.openURL('https://schoolcloudev.my.canva.site/');
+
   
     useEffect(() => {
       const getClassSchedules = () => {
@@ -191,7 +203,12 @@ export default function App() {
             break;
           // Adicione casos para os outros dias da semana conforme necessário
           default:
-            schedules = ['Horário de aulas não disponível para hoje'];
+            schedules = [
+              'Horário de aulas não disponível para hoje',
+              '',
+              '',
+              'Que tal um descanso?',
+            ];
         }
   
         setClassSchedules(schedules);
@@ -214,7 +231,9 @@ export default function App() {
           <View>
             <View style={styles.header2}>
               <Text style={styles.homeTitle2}>{currentDay}</Text>
-              <Image source={require('../../assets/logo2.png')} style={styles.logoH} />
+              <TouchableOpacity onPress={openLink0}>
+                <Image source={require('../../assets/logo2.png')} style={styles.logoH} />
+              </TouchableOpacity>
             </View>
           </View>
           <View style={styles.containerSlide2}>
@@ -231,33 +250,49 @@ export default function App() {
   
 
   function Slide3({ item }) {
+
+  const openLink0 = () =>
+    Linking.openURL('https://schoolcloudev.my.canva.site/');
+
+  const openLink1 = () =>
+    Linking.openURL('https://drive.google.com/file/d/1Ma3f-lQDfMzZTYZgsP0VClxHJS_x1K0U/view?usp=sharing');
+
+  const openLink2 = () =>
+    Linking.openURL('https://drive.google.com/file/d/1Ma3f-lQDfMzZTYZgsP0VClxHJS_x1K0U/view?usp=sharing');
+
+  const openLink3 = () =>
+    Linking.openURL('https://drive.google.com/file/d/1Ma3f-lQDfMzZTYZgsP0VClxHJS_x1K0U/view?usp=sharing');
+  const openLink4 = () =>
+    Linking.openURL('https://drive.google.com/file/d/1Ma3f-lQDfMzZTYZgsP0VClxHJS_x1K0U/view?usp=sharing');
+  const openLink5 = () =>
+    Linking.openURL('https://drive.google.com/file/d/1Ma3f-lQDfMzZTYZgsP0VClxHJS_x1K0U/view?usp=sharing');
+
     return (
       <View style={styles.container3}>
         <ScrollView contentContainerStyle={styles.containerScroll3}>
           <View>
             <View style={styles.header2}>
               <GreetingComponent style={styles.homeTitle2}/>
-              <Image source={require('../../assets/logo2.png')} style={styles.logoH}/>
+              <TouchableOpacity onPress={openLink0}>
+                <Image source={require('../../assets/logo2.png')} style={styles.logoH}/>
+              </TouchableOpacity>
             </View>
           </View>
           <View style={styles.containerSlide3}>
-            <TouchableOpacity style={styles.button}>
-              <Text style={styles.buttonText}>Biologia Moderna</Text>
+            <TouchableOpacity style={styles.button} onPress={openLink1}>
+              <Text style={styles.buttonText }>Book in PDF</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button2}>
-              <Text style={styles.buttonText}>Física</Text>
-              <Text style={styles.buttonSubText}>Newton, Helou, Gualter</Text>
+            <TouchableOpacity style={styles.button2} onPress={openLink2}>
+              <Text style={styles.buttonText}>Book in PDF</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button3}>
-              <Text style={styles.buttonText}>Geografia</Text>
-              <Text style={styles.buttonSubText}>Fronteiras da Globalização</Text>
+            <TouchableOpacity style={styles.button3} onPress={openLink3}>
+              <Text style={styles.buttonText}>Book in PDF</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button4}>
-              <Text style={styles.buttonText}>Matemática</Text>
-              <Text style={styles.buttonSubText}>Contexto e Aplicações</Text>
+            <TouchableOpacity style={styles.button4} onPress={openLink4}>
+              <Text style={styles.buttonText}>Book in PDF</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button5}>
-              <Text style={styles.buttonText}>Química</Text>
+            <TouchableOpacity style={styles.button5} onPress={openLink5}>
+              <Text style={styles.buttonText}>Book in PDF</Text>
             </TouchableOpacity>
             <Text style={styles.title3}>{item.title}</Text>
           </View>
@@ -265,12 +300,12 @@ export default function App() {
       </View>
     );
   }
-
   return (
     <AppIntroSlider
       renderItem={({ item, index }) => {
         switch (index) {
           case 0:
+
             return <Slide1 item={item} />;
           case 1:
             return <Slide2 item={item} />;

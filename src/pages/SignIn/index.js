@@ -1,122 +1,135 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
-    View, 
-    Text,
-    StyleSheet,
-    TextInput,
-    TouchableOpacity,
-    Linking,
-
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  Linking,
+  Alert,
 } from 'react-native';
-import * as Animatable from 'react-native-animatable'
-import {useNavigation} from '@react-navigation/native'
-import { useState } from 'react';
-
+import * as Animatable from 'react-native-animatable';
+import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function SignIn() {
-    const openLink = () =>
-        Linking.openURL('https://schoolcloudev.my.canva.site/');
-    const navigation = useNavigation();
-    const [email, setEmail] = useState("");
-    const [nome, setNome] = useState("");
-    const handleLogin = async () => {
-        try {
-          const response = await fetch('http://10.0.0.176:3000/api/login', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              email:email.trim(),
-              nome:nome.trim(),
-            }),
-          });
-      
-          if (response.ok) {
-            const responseData = await response.json();
-            // Obtém a turma do usuário a partir da resposta do servidor (se estiver disponível)
-            const userTurma = responseData.turma;
-      
-            // Redireciona para a tela apropriada com base na turma
-            switch (userTurma) {
-              case '1':
-                navigation.navigate('ScreenOne');
-                break;
-              case '2':
-                navigation.navigate('ScreenTwo');
-                break;
-              case '3':
-                navigation.navigate('ScreenThree');
-                break;
-              // Adicione mais casos conforme necessário
-              default:
-                // Redirecione para uma tela padrão se a turma não for encontrada
-                navigation.navigate('DefaultScreen');
-            }
-      
-            setEmail("");
-            setNome("");
-          } else {
-            console.error('Este usuário não existe');
-          }
-        } catch (error) {
-          console.error('Erro ao realizar o login', error);
+  const openLink = () => Linking.openURL('https://schoolcloudev.my.canva.site/');
+  const navigation = useNavigation();
+  const [email, setEmail] = useState('');
+  const [nome, setNome] = useState('');
+
+  useEffect(() => {
+    // Verifica se há um token salvo ao carregar o componente
+    checkToken();
+  }, []);
+
+  const checkToken = async () => {
+    try {
+      const token = await AsyncStorage.getItem('token');
+      if (token) {
+        // Se um token existir, redirecione para a tela apropriada
+        navigation.navigate('TelaApropriada'); // Substitua com a tela que você deseja redirecionar
+      }
+    } catch (error) {
+      console.error('Erro ao verificar o token:', error);
+    }
+  };
+
+  const handleLogin = async () => {
+    try {
+      const response = await fetch('http://10.0.0.176:3000/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: email.trim(),
+          nome: nome.trim(),
+        }),
+      });
+
+      if (response.ok) {
+        const responseData = await response.json();
+        const { token, turma } = responseData;
+
+        // Armazena o token no AsyncStorage
+        await AsyncStorage.setItem('token', token);
+
+        // Redireciona para a tela apropriada com base na turma
+        switch (turma) {
+          case '1':
+            navigation.navigate('ScreenOne');
+            break;
+          case '2':
+            navigation.navigate('ScreenTwo');
+            break;
+          case '3':
+            navigation.navigate('ScreenThree');
+            break;
+          // Adicione mais casos conforme necessário
+          default:
+            // Redirecione para uma tela padrão se a turma não for encontrada
+            navigation.navigate('DefaultScreen');
         }
-      };
-            
-    return (
-        <View style={styles.container}>
-            <Animatable.View 
-            animation="fadeInLeft" 
-            delay={500} 
-            style={styles.containerHeader}
-            >
-                
-                <Text style={styles.message}> Bem-vindo(a)</Text>
-            </Animatable.View>
 
-            <Animatable.View 
-            animation="fadeInUp" 
-            delay={200} 
-            style={styles.containerForm}
-            >
+        setEmail('');
+        setNome('');
+      } else {
+        const errorMessage = await response.text();
+        console.error('Erro ao fazer login:', errorMessage);
+        Alert.alert('Erro', 'Credenciais inválidas. Verifique seu email e nome.');
+      }
+    } catch (error) {
+      console.error('Erro ao realizar o login', error);
+      Alert.alert(
+        'Erro',
+        'Ocorreu um erro ao processar sua solicitação. Tente novamente mais tarde.'
+      );
+    }
+  };
 
-                <Text style={styles.title}>E-mail</Text>
-                <TextInput
-                    placeholder="Digite um email..."
-                    style={styles.input}
-                    value={email}
-                    onChangeText={(text) => setEmail(text)}
-                />
+  return (
+    <View style={styles.container}>
+      <Animatable.View animation="fadeInLeft" delay={500} style={styles.containerHeader}>
+        <Text style={styles.message}> Bem-vindo(a)</Text>
+      </Animatable.View>
 
-<               Text style={styles.title}>Nome</Text>
-                <TextInput
-                    placeholder="Digite seu nome completo..."
-                    style={styles.input}
-                    value={nome}
-                    onChangeText={(text) => setNome(text)}
-                />
+      <Animatable.View animation="fadeInUp" delay={200} style={styles.containerForm}>
+        <Text style={styles.title}>E-mail</Text>
+        <TextInput
+          placeholder="Digite um email..."
+          style={styles.input}
+          value={email}
+          onChangeText={(text) => setEmail(text)}
+        />
 
-                <TouchableOpacity style={styles.button} onPress={handleLogin}>
-                    <Text style={styles.buttonText}>Acessar</Text>
-                </TouchableOpacity>
+        <Text style={styles.title}>Nome</Text>
+        <TextInput
+          placeholder="Digite seu nome completo..."
+          style={styles.input}
+          value={nome}
+          onChangeText={(text) => setNome(text)}
+        />
 
-                <TouchableOpacity 
-                style={styles.buttonRegister} 
-                onPress={ () => navigation.navigate('Register')}
-                >
-                    <Text style={styles.registerText}>Não possui uma conta? Registre-se</Text>
-                </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={handleLogin}>
+          <Text style={styles.buttonText}>Acessar</Text>
+        </TouchableOpacity>
 
-                <TouchableOpacity style={styles.creditsButton} onPress={openLink}>
-                    <Text style={styles.creditsText}>@SchoolCloud</Text>
-                </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.buttonRegister}
+          onPress={() => navigation.navigate('Register')}
+        >
+          <Text style={styles.registerText}>Não possui uma conta? Registre-se</Text>
+        </TouchableOpacity>
 
-            </Animatable.View>
-
-        </View>
-    );
+        <TouchableOpacity style={styles.creditsButton} onPress={openLink}>
+          <Text style={styles.creditsText}>@SchoolCloud</Text>
+        </TouchableOpacity>
+      </Animatable.View>
+    </View>
+  );
 }
+
 
 const styles = StyleSheet.create({
     container:{
