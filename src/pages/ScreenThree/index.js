@@ -106,6 +106,7 @@ export default function App() {
     const [classSchedules, setClassSchedules] = useState([]);
     const openLink0 = () =>
     Linking.openURL('https://schoolcloudev.my.canva.site/');
+
   
     useEffect(() => {
       const getClassSchedules = () => {
@@ -232,7 +233,8 @@ export default function App() {
               <Text style={styles.homeTitle2}>{currentDay}</Text>
               <TouchableOpacity onPress={openLink0}>
                 <Image source={require('../../assets/logo2.png')} style={styles.logoH} />
-              </TouchableOpacity>            </View>
+              </TouchableOpacity>
+            </View>
           </View>
           <View style={styles.containerSlide2}>
             <View style={styles.horaioContainer}>
@@ -253,19 +255,17 @@ export default function App() {
     Linking.openURL('https://schoolcloudev.my.canva.site/');
 
   const openLink1 = () =>
-    Linking.openURL('https://drive.google.com/file/d/1j5DS6Yl5nDnS_IAGjGAbT4EnIRR1XdI6/view?usp=drive_link');
+    Linking.openURL('https://drive.google.com/file/d/1Ma3f-lQDfMzZTYZgsP0VClxHJS_x1K0U/view?usp=sharing');
 
   const openLink2 = () =>
-    Linking.openURL('https://drive.google.com/file/d/1MUBjf55APolLXDK2APAF3TcnYDxQYhB0/view?usp=sharing');
+    Linking.openURL('https://drive.google.com/file/d/1Ma3f-lQDfMzZTYZgsP0VClxHJS_x1K0U/view?usp=sharing');
 
   const openLink3 = () =>
-    Linking.openURL('https://drive.google.com/file/d/1erANR095YfSQc8d4cmmL3BLpzc56xWWo/view?usp=sharing');
-    
+    Linking.openURL('https://drive.google.com/file/d/1Ma3f-lQDfMzZTYZgsP0VClxHJS_x1K0U/view?usp=sharing');
   const openLink4 = () =>
-    Linking.openURL('https://drive.google.com/file/d/1-gM0n4j6ngViBvfaJqj7FaIUcUPEqDbY/view?usp=sharing');
-
+    Linking.openURL('https://drive.google.com/file/d/1Ma3f-lQDfMzZTYZgsP0VClxHJS_x1K0U/view?usp=sharing');
   const openLink5 = () =>
-    Linking.openURL('https://drive.google.com/file/d/1ICEH2BEUHITkskDbmD4IWagX-t4duiFh/view?usp=sharing');
+    Linking.openURL('https://drive.google.com/file/d/1Ma3f-lQDfMzZTYZgsP0VClxHJS_x1K0U/view?usp=sharing');
 
     return (
       <View style={styles.container3}>
@@ -274,27 +274,25 @@ export default function App() {
             <View style={styles.header2}>
               <GreetingComponent style={styles.homeTitle2}/>
               <TouchableOpacity onPress={openLink0}>
-                <Image source={require('../../assets/logo2.png')} style={styles.logoH} />
-              </TouchableOpacity>            </View>
+                <Image source={require('../../assets/logo2.png')} style={styles.logoH}/>
+              </TouchableOpacity>
+            </View>
           </View>
           <View style={styles.containerSlide3}>
             <TouchableOpacity style={styles.button} onPress={openLink1}>
-              <Text style={styles.buttonText }>Biologia Moderna</Text>
+              <Text style={styles.buttonText }>Book in PDF</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.button2} onPress={openLink2}>
-              <Text style={styles.buttonText}>Física</Text>
-              <Text style={styles.buttonSubText}>Newton, Helou, Gualter</Text>
+              <Text style={styles.buttonText}>Book in PDF</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.button3} onPress={openLink3}>
-              <Text style={styles.buttonText}>Geografia</Text>
-              <Text style={styles.buttonSubText}>Fronteiras da Globalização</Text>
+              <Text style={styles.buttonText}>Book in PDF</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.button4} onPress={openLink4}>
-              <Text style={styles.buttonText}>Matemática</Text>
-              <Text style={styles.buttonSubText}>Contexto e Aplicações</Text>
+              <Text style={styles.buttonText}>Book in PDF</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.button5} onPress={openLink5}>
-              <Text style={styles.buttonText}>Química</Text>
+              <Text style={styles.buttonText}>Book in PDF</Text>
             </TouchableOpacity>
             <Text style={styles.title3}>{item.title}</Text>
           </View>
@@ -302,12 +300,12 @@ export default function App() {
       </View>
     );
   }
-//https://drive.google.com/file/d/1j5DS6Yl5nDnS_IAGjGAbT4EnIRR1XdI6/view?usp=drive_link
   return (
     <AppIntroSlider
       renderItem={({ item, index }) => {
         switch (index) {
           case 0:
+
             return <Slide1 item={item} />;
           case 1:
             return <Slide2 item={item} />;
@@ -447,7 +445,7 @@ const styles = StyleSheet.create({
     fontSize: 35,
     marginBottom: -45,
     marginTop: 40,
-    marginLeft: -80,
+    marginLeft: -50,
     fontWeight: 'bold',
     color: '#FFFF',
   },

@@ -33,7 +33,7 @@ export default function SignIn() {
         turma: turma,
       };
   
-      fetch("http://10.0.0.176:3000/api/dados", {
+      fetch("http://192.168.137.222:3000/api/dados", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

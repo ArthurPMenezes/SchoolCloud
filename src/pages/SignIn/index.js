@@ -18,26 +18,10 @@ export default function SignIn() {
   const [email, setEmail] = useState('');
   const [nome, setNome] = useState('');
 
-  useEffect(() => {
-    // Verifica se há um token salvo ao carregar o componente
-    checkToken();
-  }, []);
-
-  const checkToken = async () => {
-    try {
-      const token = await AsyncStorage.getItem('token');
-      if (token) {
-        // Se um token existir, redirecione para a tela apropriada
-        navigation.navigate('TelaApropriada'); // Substitua com a tela que você deseja redirecionar
-      }
-    } catch (error) {
-      console.error('Erro ao verificar o token:', error);
-    }
-  };
 
   const handleLogin = async () => {
     try {
-      const response = await fetch('http://10.0.0.176:3000/api/login', {
+      const response = await fetch('http://192.168.137.222:3000/api/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
