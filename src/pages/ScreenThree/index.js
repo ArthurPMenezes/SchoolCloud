@@ -36,7 +36,14 @@ const slides = [
 const getFormattedDate = () => {
   const currentDate = new Date();
   const formattedDay = format(currentDate, 'EEEE', { locale: pt });
-  return { day: formattedDay };
+
+  // Função para capitalizar a primeira letra
+  const capitalize = (s) => {
+    if (typeof s !== 'string') return '';
+    return s.charAt(0).toUpperCase() + s.slice(1);
+  };
+
+  return { day: capitalize(formattedDay) };
 };
 
 export default function App() {
@@ -165,6 +172,8 @@ export default function App() {
             break;
             case 4:
               schedules = [
+                'Terceiro ano',
+                '',
                 '07:30 - 08:20: Matéria - Professor',
                 '08:20 - 09:10: Matéria - Professor',
                 'Intervalo',
